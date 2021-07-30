@@ -5,7 +5,7 @@ locals {
 }
 
 benchmark "network" {
-  title         = "Networking Checks"
+  title         = "Network Checks"
   description   = "Thrifty developers ensure delete unused network resources."
   documentation = file("./controls/docs/network.md")
   tags          = local.network_common_tags
