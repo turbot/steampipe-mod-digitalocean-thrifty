@@ -8,11 +8,11 @@ benchmark "volume" {
   title         = "Block Storage Volumes Checks"
   description   = "Thrifty developers ensure delete unused block storage volumes resources."
   documentation = file("./controls/docs/network.md")
-  tags          = local.volume_common_tags
+  tags          = local.block_storage_common_tags
   children = [
     control.block_storage_volume_large,
-    block_storage_volume_attached_stopped_instance,
-    block_storage_volume_unattached
+    control.block_storage_volume_attached_stopped_instance,
+    control.block_storage_volume_unattached
   ]
 }
 
