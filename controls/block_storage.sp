@@ -12,7 +12,7 @@ benchmark "volume" {
   children = [
     control.block_storage_volume_large,
     control.block_storage_volume_inactive_and_unused,
-    control.block_storage_volume_backup_age_90
+    control.block_storage_volume_snapshot_age_90
   ]
 }
 
@@ -69,9 +69,9 @@ control "block_storage_volume_inactive_and_unused" {
   })
 }
 
-control "block_storage_volume_backup_age_90" {
-  title       = "Block storage volume backup created over 90 days ago should be deleted if not required"
-  description = "Old backups are likely unneeded and costly to maintain."
+control "block_storage_volume_snapshot_age_90" {
+  title       = "Block storage volume snapshot created over 90 days ago should be deleted if not required"
+  description = "Old snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
   sql = <<-EOT
@@ -87,7 +87,7 @@ control "block_storage_volume_backup_age_90" {
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,
       digitalocean_region r
-    where region = r.slug
+    where region = r.slug and a.resource_type = 'volume'
   EOT
 
   tags = merge(local.block_storage_common_tags, {
