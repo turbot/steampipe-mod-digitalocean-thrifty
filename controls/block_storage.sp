@@ -5,7 +5,7 @@ locals {
 }
 
 benchmark "volume" {
-  title         = "Block Storage Volumes Checks"
+  title         = "Block Storage Volume Checks"
   description   = "Thrifty developers ensure delete unused block storage volumes resources."
   documentation = file("./controls/docs/network.md")
   tags          = local.block_storage_common_tags
