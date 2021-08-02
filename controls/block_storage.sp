@@ -40,7 +40,7 @@ control "block_storage_volume_large" {
 }
 
 control "block_storage_volume_inactive_and_unused" {
-  title       = "Storage block volumes attached to stopped droplet should be reviewed"
+  title       = "Block storage volumes attached to stopped droplet should be reviewed"
   description = "Droplets that are stopped may no longer need any volumes attached."
   severity    = "low"
 
