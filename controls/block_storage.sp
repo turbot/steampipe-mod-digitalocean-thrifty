@@ -11,8 +11,8 @@ benchmark "volume" {
   tags          = local.block_storage_common_tags
   children = [
     control.block_storage_volume_large,
-    control.block_storage_volume_attached_stopped_instance,
-    control.block_storage_volume_unattached
+    control.block_storage_volume_inactive_and_unused,
+    control.block_storage_volume_backup_age_90
   ]
 }
 
@@ -39,7 +39,7 @@ control "block_storage_volume_large" {
   })
 }
 
-control "block_storage_volume_attached_stopped_instance" {
+control "block_storage_volume_inactive_and_unused" {
   title       = "Storage block volumes attached to stopped droplet should be reviewed"
   description = "Droplets that are stopped may no longer need any volumes attached."
   severity    = "low"
@@ -54,7 +54,8 @@ control "block_storage_volume_attached_stopped_instance" {
       end as status,
       case
         when d.id is null then v.title || ' unattached.'
-        when d.status <> 'active' then v.title || ' associated to stopped droplet.'
+        when d.status = 'active' then  v.title || ' associated with droplet(s) ' || v.droplet_ids
+        when d.status <> 'active' then v.title || ' associated with a stopped droplet.'
         else v.title || ' in use.'
       end as reason,
       v.region_name
@@ -68,25 +69,25 @@ control "block_storage_volume_attached_stopped_instance" {
   })
 }
 
-control "block_storage_volume_unattached" {
-  title       = "Storage block volumes not attached any droplets should be reviewed"
-  description = "Volumes that are unattached may no longer need."
+control "block_storage_volume_backup_age_90" {
+  title       = "Block storage volume backup created over 90 days ago should be deleted if not required"
+  description = "Old backups are likely unneeded and costly to maintain."
   severity    = "low"
 
   sql = <<-EOT
     select
-      urn as resource,
+      a.id as resource,
       case
-        when jsonb_array_length(droplet_ids) < 1 then 'alarm'
-        else 'ok'
+        when a.created_at > current_timestamp - interval '90 days' then 'ok'
+        else 'alarm'
       end as status,
-      case
-        when jsonb_array_length(droplet_ids) < 1 then title || ' not associated.'
-        else title || ' associated to droplets ' || droplet_ids || '.'
-      end as reason,
-      region_name
+      a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason,
+      r.name
     from
-      digitalocean_volume
+      digitalocean_snapshot a,
+      jsonb_array_elements_text(regions) as region,
+      digitalocean_region r
+    where region = r.slug
   EOT
 
   tags = merge(local.block_storage_common_tags, {
