@@ -8,7 +8,7 @@ benchmark "droplet" {
   title         = "Droplet Checks"
   description   = "Thrifty developers ensure delete unused droplet resources."
   documentation = file("./controls/docs/database.md")
-  tags          = local.database_common_tags
+  tags          = local.droplet_common_tags
   children = [
     control.droplet_long_running,
     control.droplet_snapshot_age_90

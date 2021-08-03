@@ -8,12 +8,11 @@ Be Thrifty on DigitalOcean! This mod checks for unused resources and opportuniti
 
 ## References
 
-[AWS](https://www.digitalocean.com) provides on-demand cloud computing platforms and APIs to authenticated customers on a metered pay-as-you-go basis.
+[DigitalOcean](https://www.digitalocean.com) provides on-demand cloud computing platforms and APIs to authenticated customers on a metered pay-as-you-go basis.
 
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
 [Steampipe Mods](https://steampipe.io/docs/reference/mod-resources#mod) are collections of `named queries`, and codified `controls` that can be used to test current configuration of your cloud resources against a desired configuration.
-
 
 ## Documentation
 
@@ -40,7 +39,7 @@ steampipe check all
 
 Run a specific control:
 ```shell
-steampipe check control.instances_with_low_utilization
+steampipe check control.droplet_long_running
 ```
 
 ### Credentials
