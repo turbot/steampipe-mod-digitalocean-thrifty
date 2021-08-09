@@ -4,7 +4,7 @@ repository: "https://github.com/turbot/steampipe-mod-digitalocean-thrifty"
 
 # DigitalOcean Thrifty Mod
 
-Be Thrifty on DigitalOcean! This mod checks for unused resources and opportunities to optimize your spend on AWS.
+Be Thrifty on DigitalOcean! This mod checks for unused resources and opportunities to optimize your spend on DigitalOcean.
 
 ## References
 

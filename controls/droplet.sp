@@ -7,7 +7,7 @@ locals {
 benchmark "droplet" {
   title         = "Droplet Checks"
   description   = "Thrifty developers ensure delete unused droplet resources."
-  documentation = file("./controls/docs/database.md")
+  documentation = file("./controls/docs/droplet.md")
   tags          = local.droplet_common_tags
   children = [
     control.droplet_long_running,
