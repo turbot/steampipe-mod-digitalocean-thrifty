@@ -7,7 +7,7 @@ locals {
 benchmark "kubernetes" {
   title         = "Kubernetes Checks"
   description   = "Thrifty developers ensure delete unused kubernetes resources."
-  documentation = file("./controls/docs/database.md")
+  documentation = file("./controls/docs/kubernetes.md")
   tags          = local.database_common_tags
   children = [
     control.kubernetes_long_running
