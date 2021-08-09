@@ -1,4 +1,4 @@
-## Thrifty Compute Benchmark
+## Thrifty Kubernetes Benchmark
 
 Thrifty developers eliminate their unused and under-utilized core kubernetes cluster resources.
 This benchmark focuses on finding resources that have been older than thresholds days.
