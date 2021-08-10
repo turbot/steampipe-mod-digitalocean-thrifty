@@ -6,7 +6,7 @@ locals {
 
 benchmark "droplet" {
   title         = "Droplet Checks"
-  description   = "Thrifty developers ensure delete unused droplet resources."
+  description   = "Thrifty developers ensure that they delete unused droplet resources."
   documentation = file("./controls/docs/droplet.md")
   tags          = local.droplet_common_tags
   children = [
@@ -16,8 +16,8 @@ benchmark "droplet" {
 }
 
 control "droplet_long_running" {
-  title       = "Droplet created over 90 days ago should be reviewed"
-  description = "Droplet created over 90 days ago should be reviewed and deleted if not required."
+  title       = "Droplets created over 90 days ago should be reviewed"
+  description = "Droplets created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
   sql = <<-EOT

@@ -6,7 +6,7 @@ locals {
 
 benchmark "database" {
   title         = "Database Checks"
-  description   = "Thrifty developers ensure delete unused database resources."
+  description   = "Thrifty developers ensure that they delete unused database resources."
   documentation = file("./controls/docs/database.md")
   tags          = local.database_common_tags
   children = [

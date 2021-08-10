@@ -5,5 +5,5 @@ The Thrifty DigitalOcean Benchmark provides prescriptive checks for discovery of
 * DigitalOcean Block Storage
 * DigitalOcean Database
 * DigitalOcean Droplet
-* DigitalOcean Kubernetes Cluster
+* DigitalOcean Kubernetes
 * DigitalOcean Network

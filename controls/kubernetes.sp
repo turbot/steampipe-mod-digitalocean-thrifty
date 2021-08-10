@@ -6,7 +6,7 @@ locals {
 
 benchmark "kubernetes" {
   title         = "Kubernetes Checks"
-  description   = "Thrifty developers ensure delete unused kubernetes resources."
+  description   = "Thrifty developers ensure that they delete unused kubernetes resources."
   documentation = file("./controls/docs/kubernetes.md")
   tags          = local.database_common_tags
   children = [
@@ -15,8 +15,8 @@ benchmark "kubernetes" {
 }
 
 control "kubernetes_long_running" {
-  title       = "Kubernetes created over 90 days ago should be reviewed"
-  description = "Kubernetes created over 90 days ago should be reviewed and deleted if not required."
+  title       = "Kubernetes clusters created over 90 days ago should be reviewed"
+  description = "Kubernetes clusters created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
   sql = <<-EOT

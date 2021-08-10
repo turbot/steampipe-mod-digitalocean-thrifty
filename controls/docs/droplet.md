@@ -1,6 +1,6 @@
-## Thrifty Compute Benchmark
+## Thrifty Droplet Benchmark
 
-Thrifty developers eliminate their unused and under-utilized core compute resources.
+Thrifty developers eliminate their unused and under-utilized core droplet resources.
 This benchmark focuses on finding resources that have been older than thresholds days.
 
 ### Default Thresholds
