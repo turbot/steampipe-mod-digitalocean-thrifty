@@ -6,7 +6,7 @@ locals {
 
 benchmark "network" {
   title         = "Network Checks"
-  description   = "Thrifty developers ensure delete unused network resources."
+  description   = "Thrifty developers ensure that they delete unused network resources."
   documentation = file("./controls/docs/network.md")
   tags          = local.network_common_tags
   children = [
@@ -44,7 +44,7 @@ control "network_floating_ip_unattached" {
 }
 
 control "network_load_balancer_unused" {
-  title         = "Load balancers not assigned to any droplets should be reviewed"
+  title         = "Load balancers not assigned to any droplet should be reviewed"
   description   = "Load balancers are charged on an hourly basis. Unused load balancers should be reviewed, if not assigned to any droplets."
   severity      = "low"
 

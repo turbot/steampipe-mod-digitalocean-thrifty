@@ -6,7 +6,7 @@ locals {
 
 benchmark "volume" {
   title         = "Block Storage Volume Checks"
-  description   = "Thrifty developers ensure delete unused block storage volumes resources."
+  description   = "Thrifty developers ensure that they delete unused block storage volumes resources."
   documentation = file("./controls/docs/block_storage.md")
   tags          = local.block_storage_common_tags
   children = [
@@ -40,8 +40,8 @@ control "block_storage_volume_large" {
 }
 
 control "block_storage_volume_inactive_and_unused" {
-  title       = "Block storage volumes attached to stopped droplet should be reviewed"
-  description = "Droplets that are stopped may no longer need any volumes attached."
+  title       = "Block storage volumes attached to stopped droplets should be reviewed"
+  description = "Droplets that are stopped may no longer need any attached volumes."
   severity    = "low"
 
   sql = <<-EOT
@@ -70,7 +70,7 @@ control "block_storage_volume_inactive_and_unused" {
 }
 
 control "block_storage_volume_snapshot_age_90" {
-  title       = "Block storage volume snapshot created over 90 days ago should be deleted if not required"
+  title       = "Block storage volume snapshots created over 90 days ago should be deleted if not required"
   description = "Old snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
