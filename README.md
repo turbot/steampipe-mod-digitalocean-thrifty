@@ -20,7 +20,7 @@ steampipe plugin install digitalocean
 
 Clone this repo and move into the directory:
 ```sh
-git clone git@github.com:turbot/steampipe-mod-digitalocean-thrifty
+git clone https://github.com/turbot/steampipe-mod-digitalocean-thrifty.git
 cd steampipe-mod-digitalocean-thrifty
 ```
 
