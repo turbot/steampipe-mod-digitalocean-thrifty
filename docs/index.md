@@ -22,22 +22,26 @@ Be Thrifty on DigitalOcean! This mod checks for unused resources and opportuniti
 ## Get started
 
 Install the DigitalOcean plugin with [Steampipe](https://steampipe.io):
+
 ```shell
 steampipe plugin install digitalocean
 ```
 
 Clone:
+
 ```sh
-git clone git@github.com:turbot/steampipe-mod-digitalocean-thrifty
+git clone https://github.com/turbot/steampipe-mod-digitalocean-thrifty.git
 cd steampipe-mod-digitalocean-thrifty
 ```
 
 Run all benchmarks:
+
 ```shell
 steampipe check all
 ```
 
 Run a specific control:
+
 ```shell
 steampipe check control.droplet_long_running
 ```
@@ -52,5 +56,5 @@ No extra configuration is required.
 
 ## Get involved
 
-* Contribute: [Help wanted issues](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/labels/help%20wanted)
-* Community: [Slack channel](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g)
+- Contribute: [Help wanted issues](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/labels/help%20wanted)
+- Community: [Slack channel](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g)
