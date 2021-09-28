@@ -1,11 +1,11 @@
 # Block Storage
-block_storage_volume_max_size_gb = 100
+block_storage_volume_max_size_gb           = 100
 block_storage_volume_snapshot_age_max_days = 90
 
 # Database
-database_running_cluster_age_max_days = 90
+database_running_cluster_age_max_days     = 90
 database_running_cluster_age_warning_days = 30
 
 # Droplet
 droplet_snapshot_age_max_days = 90
-running_droplet_age_max_days = 90
+running_droplet_age_max_days  = 90

@@ -20,8 +20,8 @@ benchmark "volume" {
   documentation = file("./controls/docs/block_storage.md")
   tags          = local.block_storage_common_tags
   children = [
-    control.block_storage_volume_large,
     control.block_storage_volume_inactive_and_unused,
+    control.block_storage_volume_large,
     control.block_storage_volume_snapshot_max_age
   ]
 }
