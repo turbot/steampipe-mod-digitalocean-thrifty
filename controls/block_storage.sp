@@ -1,11 +1,11 @@
 variable "block_storage_volume_max_size_gb" {
   type        = number
-  description = "The maximum size in GB allowed for volumes."
+  description = "The maximum size (GB) allowed for volumes."
 }
 
 variable "block_storage_volume_snapshot_age_max_days" {
   type        = number
-  description = "The maximum number of days a snapshot can be retained."
+  description = "The maximum number of days snapshots can be retained."
 }
 
 locals {
@@ -22,13 +22,13 @@ benchmark "volume" {
   children = [
     control.block_storage_volume_large,
     control.block_storage_volume_inactive_and_unused,
-    control.block_storage_volume_snapshot_age
+    control.block_storage_volume_snapshot_max_age
   ]
 }
 
 control "block_storage_volume_large" {
-  title       = "Large block storage volumes are unusual, expensive and should be reviewed."
-  description = "Block storage volumes with over ${var.block_storage_volume_max_size_gb} GB should be resized if too large."
+  title       = "Block storage volumes should be resized if too large"
+  description = "Large block storage volumes are unusual, expensive and should be reviewed."
   severity    = "low"
 
   sql = <<-EOT
@@ -45,7 +45,8 @@ control "block_storage_volume_large" {
   EOT
 
   param "block_storage_volume_max_size_gb" {
-    default = var.block_storage_volume_max_size_gb
+    description = "The maximum size (GB) allowed for volumes."
+    default     = var.block_storage_volume_max_size_gb
   }
 
   tags = merge(local.block_storage_common_tags, {
@@ -83,8 +84,8 @@ control "block_storage_volume_inactive_and_unused" {
   })
 }
 
-control "block_storage_volume_snapshot_age" {
-  title       = "Block storage volume snapshots created over ${var.block_storage_volume_snapshot_age_max_days} days ago should be deleted if not required."
+control "block_storage_volume_snapshot_max_age" {
+  title       = "Old snapshots should be deleted if not required."
   description = "Old snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
@@ -107,7 +108,8 @@ control "block_storage_volume_snapshot_age" {
   EOT
 
   param "block_storage_volume_snapshot_age_max_days" {
-    default = var.block_storage_volume_snapshot_age_max_days
+    description = "The maximum number of days snapshots can be retained."
+    default     = var.block_storage_volume_snapshot_age_max_days
   }
 
   tags = merge(local.block_storage_common_tags, {

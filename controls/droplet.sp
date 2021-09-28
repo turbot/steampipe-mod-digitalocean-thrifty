@@ -5,7 +5,7 @@ variable "running_droplet_age_max_days" {
 
 variable "droplet_snapshot_age_max_days" {
   type        = number
-  description = "The maximum number of days a snapshot can be retained."
+  description = "The maximum number of days snapshots can be retained."
 }
 
 locals {
@@ -26,8 +26,8 @@ benchmark "droplet" {
 }
 
 control "droplet_long_running" {
-  title       = "Droplets created over ${var.running_droplet_age_max_days} days ago should be reviewed"
-  description = "Droplets created over ${var.running_droplet_age_max_days} days ago should be reviewed and deleted if not required."
+  title       = "Long running droplets should be reviewed"
+  description = "Long running droplets should be reviewed and deleted if not required."
   severity    = "low"
 
   sql = <<-EOT
@@ -49,7 +49,8 @@ control "droplet_long_running" {
   EOT
 
   param "running_droplet_age_max_days" {
-    default = var.running_droplet_age_max_days
+    description = "The maximum number of days a droplet is allowed to run."
+    default     = var.running_droplet_age_max_days
   }
 
   tags = merge(local.droplet_common_tags, {
@@ -58,7 +59,7 @@ control "droplet_long_running" {
 }
 
 control "droplet_snapshot_age" {
-  title       = "Droplet snapshots created over ${var.droplet_snapshot_age_max_days} days ago should be deleted if not required"
+  title       = "Old droplet snapshots should be deleted if not required"
   description = "Old droplet snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
@@ -81,7 +82,8 @@ control "droplet_snapshot_age" {
   EOT
 
   param "droplet_snapshot_age_max_days" {
-    default = var.droplet_snapshot_age_max_days
+    description = "The maximum number of days snapshots can be retained."
+    default     = var.droplet_snapshot_age_max_days
   }
 
   tags = merge(local.droplet_common_tags, {

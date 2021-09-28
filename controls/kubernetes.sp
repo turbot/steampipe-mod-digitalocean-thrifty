@@ -20,8 +20,8 @@ benchmark "kubernetes" {
 }
 
 control "kubernetes_long_running" {
-  title       = "Kubernetes clusters created over ${var.kubernetes_running_cluster_age_max_days} days ago should be reviewed"
-  description = "Kubernetes clusters created over ${var.kubernetes_running_cluster_age_max_days} days ago should be reviewed and deleted if not required."
+  title       = "Long running Kubernetes clusters should be reviewed"
+  description = "Long running Kubernetes clusters should be reviewed and deleted if not required."
   severity    = "low"
 
   sql = <<-EOT
@@ -47,6 +47,7 @@ control "kubernetes_long_running" {
   EOT
 
   param "kubernetes_running_cluster_age_max_days" {
+    description = "The maximum number of days a kubernetes cluster is allowed to run."
     default = var.kubernetes_running_cluster_age_max_days
   }
 

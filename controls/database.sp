@@ -25,8 +25,8 @@ benchmark "database" {
 }
 
 control "database_long_running" {
-  title       = "Database clusters created over ${var.database_running_cluster_age_max_days} days ago should be reviewed"
-  description = "Database clusters created over ${var.database_running_cluster_age_max_days} days ago should be reviewed and deleted if not required."
+  title       = "Long running database clusters should be reviewed"
+  description = "Long running database clusters should be reviewed and deleted if not required."
   severity    = "low"
 
   sql = <<-EOT
@@ -49,11 +49,13 @@ control "database_long_running" {
   EOT
 
   param "database_running_cluster_age_max_days" {
-    default = var.database_running_cluster_age_max_days
+    description = "The maximum number of days a database cluster is allowed to run."
+    default     = var.database_running_cluster_age_max_days
   }
 
   param "database_running_cluster_age_warning_days" {
-    default = var.database_running_cluster_age_warning_days
+    description = "The number of days after which a database cluster set a warning."
+    default     = var.database_running_cluster_age_warning_days
   }
 
   tags = merge(local.database_common_tags, {
