@@ -9,3 +9,6 @@ database_running_cluster_age_warning_days = 30
 # Droplet
 droplet_snapshot_age_max_days = 90
 running_droplet_age_max_days  = 90
+
+# Kubernetes
+kubernetes_running_cluster_age_max_days = 90
