@@ -1,6 +1,6 @@
 variable "running_droplet_age_max_days" {
   type        = number
-  description = "The maximum number of days a droplet is allowed to run."
+  description = "The maximum number of days droplets are allowed to run."
 }
 
 variable "droplet_snapshot_age_max_days" {
@@ -49,7 +49,7 @@ control "droplet_long_running" {
   EOT
 
   param "running_droplet_age_max_days" {
-    description = "The maximum number of days a droplet is allowed to run."
+    description = "The maximum number of days droplets are allowed to run."
     default     = var.running_droplet_age_max_days
   }
 

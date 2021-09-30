@@ -1,11 +1,11 @@
 variable "database_running_cluster_age_max_days" {
   type        = number
-  description = "The maximum number of days a database cluster is allowed to run."
+  description = "The maximum number of days database clusters are allowed to run."
 }
 
 variable "database_running_cluster_age_warning_days" {
   type        = number
-  description = "The number of days after which a database cluster set a warning."
+  description = "The number of days database clusters can be running before sending a warning."
 }
 
 locals {
@@ -49,12 +49,12 @@ control "database_long_running" {
   EOT
 
   param "database_running_cluster_age_max_days" {
-    description = "The maximum number of days a database cluster is allowed to run."
+    description = "The maximum number of days database clusters are allowed to run."
     default     = var.database_running_cluster_age_max_days
   }
 
   param "database_running_cluster_age_warning_days" {
-    description = "The number of days after which a database cluster set a warning."
+    description = "The number of days database clusters can be running before sending a warning."
     default     = var.database_running_cluster_age_warning_days
   }
 

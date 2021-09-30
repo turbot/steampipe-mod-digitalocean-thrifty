@@ -7,4 +7,4 @@ This benchmark focuses on finding resources that have been older than thresholds
 
 | Variable | Description | Default |
 | - | - | - |
-| kubernetes_running_cluster_age_max_days | The maximum number of days a kubernetes cluster is allowed to run. | 90 days |
+| kubernetes_running_cluster_age_max_days | The maximum number of days clusters are allowed to run. | 90 days |

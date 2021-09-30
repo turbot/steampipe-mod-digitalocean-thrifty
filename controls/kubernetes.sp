@@ -1,6 +1,6 @@
 variable "kubernetes_running_cluster_age_max_days" {
   type        = number
-  description = "The maximum number of days a kubernetes cluster is allowed to run."
+  description = "The maximum number of days clusters are allowed to run."
 }
 
 locals {
@@ -47,7 +47,7 @@ control "kubernetes_long_running" {
   EOT
 
   param "kubernetes_running_cluster_age_max_days" {
-    description = "The maximum number of days a kubernetes cluster is allowed to run."
+    description = "The maximum number of days clusters are allowed to run."
     default = var.kubernetes_running_cluster_age_max_days
   }
 
