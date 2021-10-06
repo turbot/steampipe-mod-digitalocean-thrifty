@@ -2,7 +2,7 @@
 
 _Enhancements_
 
-- Updated: GitHub repository cloning instructions in docs/index.md now use HTTPS instead of SSH
+- Updated: GitHub repository cloning instructions in docs/index.md now use HTTPS instead of SSH url
 
 ## v0.1 [2021-08-12]
 
