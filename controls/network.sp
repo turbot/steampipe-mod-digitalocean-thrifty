@@ -33,7 +33,7 @@ control "network_floating_ip_unattached" {
         else title || ' is attached.'
       end as reason,
       -- Additional Dimensions
-      region ->> 'name'
+      region ->> 'name' as region
     from
       digitalocean_floating_ip;
   EOT
@@ -58,7 +58,7 @@ control "network_load_balancer_unused" {
       end as status,
       title || ' assigned with ' || jsonb_array_length(droplet_ids) || ' droplet(s).' as reason,
       -- Additional Dimensions
-      region_name
+      region_name as region
     from
       digitalocean_load_balancer;
   EOT
