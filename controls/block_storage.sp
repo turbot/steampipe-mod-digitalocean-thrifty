@@ -1,6 +1,6 @@
 locals {
-  block_storage_common_tags = merge(local.thrifty_common_tags, {
-    service = "volume"
+  block_storage_common_tags = merge(local.digitalocean_thrifty_common_tags, {
+    service = "DigitalOcean/BlockStorage"
   })
 }
 
@@ -8,12 +8,15 @@ benchmark "volume" {
   title         = "Block Storage Volume Checks"
   description   = "Thrifty developers ensure that they delete unused block storage volumes resources."
   documentation = file("./controls/docs/block_storage.md")
-  tags          = local.block_storage_common_tags
   children = [
     control.block_storage_volume_large,
     control.block_storage_volume_inactive_and_unused,
     control.block_storage_volume_snapshot_age_90
   ]
+
+  tags = merge(local.block_storage_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "block_storage_volume_large" {
