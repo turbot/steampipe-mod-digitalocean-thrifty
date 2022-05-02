@@ -1,9 +1,3 @@
-## v0.2 [2021-10-06]
-
-_Enhancements_
-
-- Updated: GitHub repository cloning instructions in docs/index.md now use HTTPS instead of SSH url
-
 ## v0.3 [2022-05-02]
 
 _Enhancements_
