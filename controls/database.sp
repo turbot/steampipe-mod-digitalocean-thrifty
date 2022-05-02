@@ -1,6 +1,6 @@
 locals {
-  database_common_tags = merge(local.thrifty_common_tags, {
-    service = "database"
+  database_common_tags = merge(local.digitalocean_thrifty_common_tags, {
+    service = "DigitalOcean/Database"
   })
 }
 
@@ -8,10 +8,13 @@ benchmark "database" {
   title         = "Database Checks"
   description   = "Thrifty developers ensure that they delete unused database resources."
   documentation = file("./controls/docs/database.md")
-  tags          = local.database_common_tags
   children = [
     control.database_long_running
   ]
+
+  tags = merge(local.database_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "database_long_running" {
