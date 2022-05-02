@@ -1,6 +1,6 @@
 locals {
-  network_common_tags = merge(local.thrifty_common_tags, {
-    service = "network"
+  network_common_tags = merge(local.digitalocean_thrifty_common_tags, {
+    service = "DigitalOcean/Network"
   })
 }
 
@@ -8,11 +8,14 @@ benchmark "network" {
   title         = "Network Checks"
   description   = "Thrifty developers ensure that they delete unused network resources."
   documentation = file("./controls/docs/network.md")
-  tags          = local.network_common_tags
   children = [
     control.network_floating_ip_unattached,
     control.network_load_balancer_unused
   ]
+
+  tags = merge(local.network_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "network_floating_ip_unattached" {

@@ -1,6 +1,6 @@
 locals {
-  kubernetes_common_tags = merge(local.thrifty_common_tags, {
-    service = "kubernetes"
+  kubernetes_common_tags = merge(local.digitalocean_thrifty_common_tags, {
+    service = "DigitalOcean/Kubernetes"
   })
 }
 
@@ -8,10 +8,13 @@ benchmark "kubernetes" {
   title         = "Kubernetes Checks"
   description   = "Thrifty developers ensure that they delete unused kubernetes resources."
   documentation = file("./controls/docs/kubernetes.md")
-  tags          = local.database_common_tags
   children = [
     control.kubernetes_long_running
   ]
+
+  tags = merge(local.kubernetes_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "kubernetes_long_running" {

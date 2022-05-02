@@ -1,6 +1,6 @@
 locals {
-  droplet_common_tags = merge(local.thrifty_common_tags, {
-    service = "droplet"
+  droplet_common_tags = merge(local.digitalocean_thrifty_common_tags, {
+    service = "DigitalOcean/Droplet"
   })
 }
 
@@ -8,11 +8,14 @@ benchmark "droplet" {
   title         = "Droplet Checks"
   description   = "Thrifty developers ensure that they delete unused droplet resources."
   documentation = file("./controls/docs/droplet.md")
-  tags          = local.droplet_common_tags
   children = [
     control.droplet_long_running,
     control.droplet_snapshot_age_90
   ]
+
+  tags = merge(local.droplet_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "droplet_long_running" {

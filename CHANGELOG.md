@@ -1,3 +1,9 @@
+## v0.3 [2022-05-02]
+
+_Enhancements_
+
+- Added `category`, `service`, and `type` tags to benchmarks and controls. ([#17](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/17))
+
 ## v0.2 [2021-10-06]
 
 _Enhancements_
