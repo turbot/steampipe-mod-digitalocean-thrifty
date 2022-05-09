@@ -2,44 +2,11 @@
 
 Are you a Thrifty DigitalOcean dev? This Steampipe mod checks your DigitalOcean account(s) for unused and under-utilized resources.
 
-## Quick start
+Run checks in a dashboard:
 
-1) Download and install Steampipe (https://steampipe.io/downloads). Or use Brew:
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/add-benchmark-screenshots/docs/digitalocean_thrifty_dashboard.png)
 
-```shell
-brew tap turbot/tap
-brew install steampipe
-
-steampipe -v 
-steampipe version 0.7.2
-```
-
-Install the DigitalOcean plugin
-
-```shell
-steampipe plugin install digitalocean
-```
-
-Clone this repo and move into the directory:
-
-```sh
-git clone https://github.com/turbot/steampipe-mod-digitalocean-thrifty.git
-cd steampipe-mod-digitalocean-thrifty
-```
-
-Run all benchmarks:
-
-```shell
-steampipe check all
-```
-
-Your can also run a specific controls:
-
-```shell
-steampipe check control.droplet_long_running
-```
-
-## Current Thrifty Checks
+Includes checks for:
 
 - Underused **Kubernetes** Clusters
 - Unused, underused and oversized **Droplets** and **Snapshots**
@@ -48,42 +15,83 @@ steampipe check control.droplet_long_running
 - **Network Checks**
 - [#TODO List](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 
-**Use introspection to view the available controls:**:
+## Getting started
 
-```shell
-steampipe query "select resource_name from steampipe_control;"
-```
+### Installation
 
-## Contributing
-
-Have an idea for a thrifty check but aren't sure how to get started?
-
-- **[Join our Slack community →](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g)**
-- **[Mod developer guide →](https://steampipe.io/docs/using-steampipe/writing-controls)**
-
-**Prerequisites**:
-
-- [Steampipe installed](https://steampipe.io/downloads)
-- Steampipe DigitalOcean plugin installed (see above)
-
-**Fork**:
-Click on the GitHub Fork Widget. (Don't forget to :star: the repo!)
-
-**Clone**:
-
-1. Change the current working directory to the location where you want to put the cloned directory on your local filesystem.
-2. Type the clone command below inserting your GitHub username instead of `YOUR-USERNAME`:
+Download and install Steampipe (https://steampipe.io/downloads). Or use Brew:
 
 ```sh
-git clone git@github.com:YOUR-USERNAME/steampipe-mod-digitalocean-thrifty
+brew tap turbot/tap
+brew install steampipe
+```
+
+Install the DigitalOcean plugin with [Steampipe](https://steampipe.io):
+
+```sh
+steampipe plugin install digitalocean
+```
+
+Clone:
+
+```sh
+git clone https://github.com/turbot/steampipe-mod-digitalocean-thrifty.git
 cd steampipe-mod-digitalocean-thrifty
 ```
 
-Thanks for getting involved! We would love to have you [join our Slack community](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g) and hang out with other Mod developers.
+### Usage
+
+Start your dashboard server to get started:
+
+```sh
+steampipe dashboard
+```
+
+By default, the dashboard interface will then be launched in a new browser
+window at https://localhost:9194. From here, you can run benchmarks by
+selecting one or searching for a specific one.
+
+Instead of running benchmarks in a dashboard, you can also run them within your
+terminal with the `steampipe check` command:
+
+Run all benchmarks:
+
+```sh
+steampipe check all
+```
+
+Run a single benchmark:
+
+```sh
+steampipe check benchmark.droplet
+```
+
+Run a specific control:
+
+```sh
+steampipe check control.droplet_long_running
+```
+
+Different output formats are also available, for more information please see
+[Output Formats](https://steampipe.io/docs/reference/cli/check#output-formats).
+
+### Credentials
+
+This mod uses the credentials configured in the [Steampipe DigitalOcean plugin](https://hub.steampipe.io/plugins/turbot/digitalocean).
+
+### Configuration
+
+No extra configuration is required.
+
+## Contributing
+
+If you have an idea for additional controls or just want to help maintain and extend this mod ([or others](https://github.com/topics/steampipe-mod)) we would love you to join the community and start contributing.
+
+- **[Join our Slack community →](https://steampipe.io/community/join)** and hang out with other Mod developers.
 
 Please see the [contribution guidelines](https://github.com/turbot/steampipe/blob/main/CONTRIBUTING.md) and our [code of conduct](https://github.com/turbot/steampipe/blob/main/CODE_OF_CONDUCT.md). All contributions are subject to the [Apache 2.0 open source license](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/blob/main/LICENSE).
 
-`help wanted` issues:
+Want to help but not sure where to start? Pick up one of the `help wanted` issues:
 
 - [Steampipe](https://github.com/turbot/steampipe/labels/help%20wanted)
 - [DigitalOcean Thrifty Mod](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/labels/help%20wanted)
