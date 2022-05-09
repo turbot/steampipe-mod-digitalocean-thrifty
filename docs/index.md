@@ -6,9 +6,8 @@ repository: "https://github.com/turbot/steampipe-mod-digitalocean-thrifty"
 
 Be Thrifty on DigitalOcean! This mod checks for unused resources and opportunities to optimize your spend on DigitalOcean.
 
-<TO-DO>
-<TO-DO>
-<TO-DO>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/main/docs/digitalocean_thrifty_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/main/docs/digitalocean_thrifty_block_storage_dashboard.png" width="50%" type="thumbnail"/>
 
 ## References
 

@@ -4,11 +4,7 @@ Are you a Thrifty DigitalOcean dev? This Steampipe mod checks your DigitalOcean 
 
 Run checks in a dashboard:
 
-<!-- ![image](https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/add-benchmark-screenshots/docs/digitalocean_thrifty_dashboard.png) -->
-
-Or in a terminal:
-
-<!-- ![image](https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/main/docs/digitalocean_thrifty_mod_terminal.png) -->
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/add-benchmark-screenshots/docs/digitalocean_thrifty_dashboard.png)
 
 Includes checks for:
 
