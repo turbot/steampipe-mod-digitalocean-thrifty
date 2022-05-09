@@ -1,3 +1,6 @@
+## v0.4 [2022-05-10]
+- Updated docs/index.md and README with new dashboard screenshots and latest format. ([#22](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/22))
+
 ## v0.3 [2022-05-02]
 
 _Enhancements_
