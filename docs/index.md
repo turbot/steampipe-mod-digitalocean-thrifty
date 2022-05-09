@@ -76,7 +76,7 @@ steampipe check benchmark.droplet
 Run a specific control:
 
 ```sh
-steampipe check control.control.droplet_long_running
+steampipe check control.droplet_long_running
 ```
 
 Different output formats are also available, for more information please see
