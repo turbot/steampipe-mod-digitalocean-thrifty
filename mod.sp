@@ -7,6 +7,20 @@ locals {
   }
 }
 
+variable "tag_dimensions" {
+  type        = list(string)
+  description = "A list of tags to add as dimensions to each control."
+  default     = [ "Owner" ]
+}
+
+locals {
+
+  tag_dimensions_sql = <<-EOQ
+  %{~ for dim in var.tag_dimensions }, tags ->> '${dim}' as "${replace(dim, "\"", "\"\"")}"%{ endfor ~}
+  EOQ
+
+}
+
 mod "digitalocean_thrifty" {
   # hub metadata
   title         = "DigitalOcean Thrifty"

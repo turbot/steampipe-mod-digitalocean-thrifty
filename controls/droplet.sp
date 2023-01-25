@@ -37,6 +37,7 @@ control "droplet_long_running" {
         else title || ' has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
       end as reason,
       region ->> 'name' as region
+      ${local.tag_dimensions_sql}
     from
       digitalocean_droplet
   EOT
@@ -60,6 +61,7 @@ control "droplet_snapshot_age_90" {
       end as status,
       a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason,
       r.name
+      ${local.tag_dimensions_sql}
     from
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,
