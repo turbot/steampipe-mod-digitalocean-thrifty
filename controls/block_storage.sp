@@ -62,7 +62,7 @@ control "block_storage_volume_inactive_and_unused" {
         else v.title || ' in use.'
       end as reason,
       v.region_name
-      ${local.tag_dimensions_sql}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
     from
       digitalocean_volume as v
       left join digitalocean_droplet as d on v.droplet_ids @> ('['||d.id||']'):: jsonb
@@ -87,7 +87,7 @@ control "block_storage_volume_snapshot_age_90" {
       end as status,
       a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason,
       r.name
-      ${local.tag_dimensions_sql}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
     from
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,

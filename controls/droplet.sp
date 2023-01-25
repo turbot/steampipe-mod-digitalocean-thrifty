@@ -61,7 +61,7 @@ control "droplet_snapshot_age_90" {
       end as status,
       a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason,
       r.name
-      ${local.tag_dimensions_sql}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
     from
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,

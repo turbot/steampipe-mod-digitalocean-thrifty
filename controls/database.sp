@@ -34,7 +34,7 @@ control "database_long_running" {
       d.title || ' of ' || d.engine || ' type in use for ' || date_part('day', now() - d.created_at) || ' day(s).' as reason,
       -- Additional Dimensions
       r.name as region
-      ${local.tag_dimensions_sql}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
     from
       digitalocean_database as d,
       digitalocean_region as r

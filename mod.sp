@@ -15,10 +15,15 @@ variable "tag_dimensions" {
 
 locals {
 
-  tag_dimensions_sql = <<-EOQ
-  %{~ for dim in var.tag_dimensions }, tags ->> '${dim}' as "${replace(dim, "\"", "\"\"")}"%{ endfor ~}
+  tag_dimensions_qualifier_sql = <<-EOQ
+  %{~ for dim in var.tag_dimensions },  __QUALIFIER__tags ->> '${dim}' as "${replace(dim, "\"", "\"\"")}"%{ endfor ~} 
   EOQ
 
+}
+
+locals {
+
+  tag_dimensions_sql = replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "")
 }
 
 mod "digitalocean_thrifty" {

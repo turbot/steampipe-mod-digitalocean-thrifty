@@ -39,7 +39,7 @@ control "kubernetes_long_running" {
         else a.title || ' has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
       end as reason,
       b.name as region
-      ${local.tag_dimensions_sql}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "b.")}
     from
       digitalocean_kubernetes_cluster a
       left join digitalocean_region as b on b.slug = a.region_slug
