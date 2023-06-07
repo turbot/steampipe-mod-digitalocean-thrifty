@@ -23,7 +23,7 @@ control "droplet_long_running" {
   description = "Droplets created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
       d.urn as resource,
       case
@@ -43,7 +43,7 @@ control "droplet_long_running" {
       digitalocean_region as r
     where 
       d.region_slug = r.slug;
-  EOT
+  EOQ
 
   tags = merge(local.droplet_common_tags, {
     class = "unused"
@@ -55,7 +55,7 @@ control "droplet_snapshot_age_90" {
   description = "Old droplet snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
       a.id as resource,
       case
@@ -70,7 +70,7 @@ control "droplet_snapshot_age_90" {
       jsonb_array_elements_text(regions) as region,
       digitalocean_region r
     where region = r.slug and a.resource_type = 'droplet';
-  EOT
+  EOQ
 
   tags = merge(local.droplet_common_tags, {
     class = "unused"

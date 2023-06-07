@@ -22,7 +22,7 @@ control "kubernetes_long_running" {
   description = "Kubernetes clusters created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
       a.urn as resource,
       case
@@ -43,7 +43,7 @@ control "kubernetes_long_running" {
     from
       digitalocean_kubernetes_cluster a
       left join digitalocean_region as b on b.slug = a.region_slug;
-  EOT
+  EOQ
 
   tags = merge(local.droplet_common_tags, {
     class = "unused"

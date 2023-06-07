@@ -22,9 +22,8 @@ control "database_long_running" {
   description = "Database clusters created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
-      -- Required Columns
       d.urn as resource,
       case
         when date_part('day', now() - d.created_at) > 90 then 'alarm'
@@ -32,7 +31,6 @@ control "database_long_running" {
         else 'ok'
       end as status,
       d.title || ' of ' || d.engine || ' type in use for ' || date_part('day', now() - d.created_at) || ' day(s).' as reason
-      -- Additional Dimensions
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}
     from
@@ -40,7 +38,7 @@ control "database_long_running" {
       digitalocean_region as r
     where
       d.region_slug = r.slug;
-  EOT
+  EOQ
 
   tags = merge(local.database_common_tags, {
     class = "unused"

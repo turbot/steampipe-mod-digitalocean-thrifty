@@ -24,7 +24,7 @@ control "block_storage_volume_large" {
   description = "Block storage volumes with over 100 GB should be resized if too large"
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
       v.urn as resource,
       case
@@ -39,7 +39,7 @@ control "block_storage_volume_large" {
       digitalocean_region r
     where
       v.region_slug = r.slug;
-  EOT
+  EOQ
 
   tags = merge(local.block_storage_common_tags, {
     class = "unused"
@@ -51,7 +51,7 @@ control "block_storage_volume_inactive_and_unused" {
   description = "Droplets that are stopped may no longer need any attached volumes."
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
       v.urn as resource,
       case
@@ -73,7 +73,7 @@ control "block_storage_volume_inactive_and_unused" {
       left join digitalocean_droplet as d on v.droplet_ids @> ('['||d.id||']'):: jsonb
     where
       v.region_slug = r.slug;
-  EOT
+  EOQ
 
   tags = merge(local.block_storage_common_tags, {
     class = "unused"
@@ -85,7 +85,7 @@ control "block_storage_volume_snapshot_age_90" {
   description = "Old snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
       a.id as resource,
       case
@@ -100,7 +100,7 @@ control "block_storage_volume_snapshot_age_90" {
       jsonb_array_elements_text(regions) as region,
       digitalocean_region r
     where region = r.slug and a.resource_type = 'volume';
-  EOT
+  EOQ
 
   tags = merge(local.block_storage_common_tags, {
     class = "unused"

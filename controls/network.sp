@@ -23,9 +23,8 @@ control "network_floating_ip_unattached" {
   description = "Unattached floating IPs cost money and should be released."
   severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
-      -- Required Columns
       ip.urn as resource,
       case
         when ip.droplet_id is null then 'alarm'
@@ -35,7 +34,6 @@ control "network_floating_ip_unattached" {
         when ip.droplet_id is null then ip.title || ' not attached.'
         else ip.title || ' is attached.'
       end as reason
-      -- Additional Dimensions
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "ip.")}
     from
@@ -43,7 +41,7 @@ control "network_floating_ip_unattached" {
       digitalocean_region as r
     where
       ip.region_slug = r.slug;
-  EOT
+  EOQ
 
   tags = merge(local.network_common_tags, {
     class = "unused"
@@ -51,20 +49,18 @@ control "network_floating_ip_unattached" {
 }
 
 control "network_load_balancer_unused" {
-  title         = "Load balancers not assigned to any droplet should be reviewed"
-  description   = "Load balancers are charged on an hourly basis. Unused load balancers should be reviewed, if not assigned to any droplets."
-  severity      = "low"
+  title       = "Load balancers not assigned to any droplet should be reviewed"
+  description = "Load balancers are charged on an hourly basis. Unused load balancers should be reviewed, if not assigned to any droplets."
+  severity    = "low"
 
-  sql = <<-EOT
+  sql = <<-EOQ
     select
-      -- Required Columns
       b.urn as resource,
       case
         when jsonb_array_length(b.droplet_ids) < 1 then 'alarm'
         else 'ok'
       end as status,
       b.title || ' assigned with ' || jsonb_array_length(b.droplet_ids) || ' droplet(s).' as reason
-      -- Additional Dimensions
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "b.")}
     from
@@ -72,7 +68,7 @@ control "network_load_balancer_unused" {
       digitalocean_region as r
     where
       b.region_slug = r.slug;
-  EOT
+  EOQ
 
   tags = merge(local.network_common_tags, {
     class = "unused"
