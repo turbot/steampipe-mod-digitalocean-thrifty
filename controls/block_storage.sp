@@ -99,7 +99,9 @@ control "block_storage_volume_snapshot_age_90" {
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,
       digitalocean_region r
-    where region = r.slug and a.resource_type = 'volume';
+    where 
+        region = r.slug 
+        and a.resource_type = 'volume';
   EOT
 
   tags = merge(local.block_storage_common_tags, {
