@@ -69,7 +69,9 @@ control "droplet_snapshot_age_90" {
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,
       digitalocean_region r
-    where region = r.slug and a.resource_type = 'droplet';
+    where
+      region = r.slug 
+      and a.resource_type = 'droplet';
   EOQ
 
   tags = merge(local.droplet_common_tags, {
