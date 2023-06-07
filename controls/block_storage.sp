@@ -99,7 +99,7 @@ control "block_storage_volume_snapshot_age_90" {
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,
       digitalocean_region r
-    where 
+    where
       region = r.slug 
       and a.resource_type = 'volume';
   EOQ
