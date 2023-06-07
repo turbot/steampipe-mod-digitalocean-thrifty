@@ -26,15 +26,19 @@ control "block_storage_volume_large" {
 
   sql = <<-EOT
     select
-      urn as resource,
+      v.urn as resource,
       case
-        when size_gigabytes <= 100 then 'ok'
+        when v.size_gigabytes <= 100 then 'ok'
         else 'alarm'
       end as status,
-      id || ' is ' || size_gigabytes || 'GB.' as reason,
-      region_name as region
+      v.id || ' is ' || v.size_gigabytes || 'GB.' as reason
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
     from
-      digitalocean_volume
+      digitalocean_volume as v,
+      digitalocean_region r
+    where
+      v.region_slug = r.slug;
   EOT
 
   tags = merge(local.block_storage_common_tags, {
@@ -60,12 +64,15 @@ control "block_storage_volume_inactive_and_unused" {
         when d.status = 'active' then  v.title || ' associated with droplet(s) ' || v.droplet_ids
         when d.status <> 'active' then v.title || ' associated with a stopped droplet.'
         else v.title || ' in use.'
-      end as reason,
-      v.region_name
+      end as reason
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
     from
+      digitalocean_region r,
       digitalocean_volume as v
       left join digitalocean_droplet as d on v.droplet_ids @> ('['||d.id||']'):: jsonb
+    where
+      v.region_slug = r.slug;
   EOT
 
   tags = merge(local.block_storage_common_tags, {
@@ -85,14 +92,14 @@ control "block_storage_volume_snapshot_age_90" {
         when a.created_at > current_timestamp - interval '90 days' then 'ok'
         else 'alarm'
       end as status,
-      a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason,
-      r.name
+      a.title || ' has been created for ' || date_part('day', now() - a.created_at) || ' day(s).' as reason
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
     from
       digitalocean_snapshot a,
       jsonb_array_elements_text(regions) as region,
       digitalocean_region r
-    where region = r.slug and a.resource_type = 'volume'
+    where region = r.slug and a.resource_type = 'volume';
   EOT
 
   tags = merge(local.block_storage_common_tags, {

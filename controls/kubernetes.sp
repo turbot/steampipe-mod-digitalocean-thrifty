@@ -37,12 +37,12 @@ control "kubernetes_long_running" {
         when date_part('day', now() - created_at) > 90 and status in ('invalid', 'error')
         then a.title || ' instance status is ' || status || ', has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
         else a.title || ' has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
-      end as reason,
-      b.name as region
-      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "b.")}
+      end as reason
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "b.")}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
     from
       digitalocean_kubernetes_cluster a
-      left join digitalocean_region as b on b.slug = a.region_slug
+      left join digitalocean_region as b on b.slug = a.region_slug;
   EOT
 
   tags = merge(local.droplet_common_tags, {

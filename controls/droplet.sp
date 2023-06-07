@@ -25,21 +25,24 @@ control "droplet_long_running" {
 
   sql = <<-EOT
     select
-      urn as resource,
+      d.urn as resource,
       case
-        when date_part('day', now() - created_at) > 90 and status = 'off' then 'alarm'
-        when date_part('day', now() - created_at) > 90 then 'info'
+        when date_part('day', now() - d.created_at) > 90 and status = 'off' then 'alarm'
+        when date_part('day', now() - d.created_at) > 90 then 'info'
         else 'ok'
       end as status,
       case
-        when date_part('day', now() - created_at) > 90 and status = 'off'
-        then title || ' instance status is ' || status || ', has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
-        else title || ' has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
-      end as reason,
-      region ->> 'name' as region
-      ${local.tag_dimensions_sql}
+        when date_part('day', now() - d.created_at) > 90 and d.status = 'off'
+        then d.title || ' instance status is ' || d.status || ', has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
+        else d.title || ' has been launced for ' || date_part('day', now() - d.created_at) || ' day(s).'
+      end as reason
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}
     from
-      digitalocean_droplet
+      digitalocean_droplet as d,
+      digitalocean_region as r
+    where 
+      d.region_slug = r.slug;
   EOT
 
   tags = merge(local.droplet_common_tags, {
@@ -59,8 +62,8 @@ control "droplet_snapshot_age_90" {
         when a.created_at > current_timestamp - interval '90 days' then 'ok'
         else 'alarm'
       end as status,
-      a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason,
-      r.name
+      a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
     from
       digitalocean_snapshot a,

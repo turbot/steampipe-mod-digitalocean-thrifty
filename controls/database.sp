@@ -31,10 +31,10 @@ control "database_long_running" {
         when date_part('day', now() - d.created_at) > 30 then 'info'
         else 'ok'
       end as status,
-      d.title || ' of ' || d.engine || ' type in use for ' || date_part('day', now() - d.created_at) || ' day(s).' as reason,
+      d.title || ' of ' || d.engine || ' type in use for ' || date_part('day', now() - d.created_at) || ' day(s).' as reason
       -- Additional Dimensions
-      r.name as region
-      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}
     from
       digitalocean_database as d,
       digitalocean_region as r

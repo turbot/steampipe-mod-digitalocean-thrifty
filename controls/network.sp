@@ -26,20 +26,23 @@ control "network_floating_ip_unattached" {
   sql = <<-EOT
     select
       -- Required Columns
-      urn as resource,
+      ip.urn as resource,
       case
-        when droplet_id is null then 'alarm'
+        when ip.droplet_id is null then 'alarm'
         else 'ok'
       end as status,
       case
-        when droplet_id is null then title || ' not attached.'
-        else title || ' is attached.'
-      end as reason,
+        when ip.droplet_id is null then ip.title || ' not attached.'
+        else ip.title || ' is attached.'
+      end as reason
       -- Additional Dimensions
-      region ->> 'name'
-      ${local.tag_dimensions_sql}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "ip.")}
     from
-      digitalocean_floating_ip;
+      digitalocean_floating_ip as ip,
+      digitalocean_region as r
+    where
+      ip.region_slug = r.slug;
   EOT
 
   tags = merge(local.network_common_tags, {
@@ -55,17 +58,20 @@ control "network_load_balancer_unused" {
   sql = <<-EOT
     select
       -- Required Columns
-      urn as resource,
+      b.urn as resource,
       case
-        when jsonb_array_length(droplet_ids) < 1 then 'alarm'
+        when jsonb_array_length(b.droplet_ids) < 1 then 'alarm'
         else 'ok'
       end as status,
-      title || ' assigned with ' || jsonb_array_length(droplet_ids) || ' droplet(s).' as reason,
+      b.title || ' assigned with ' || jsonb_array_length(b.droplet_ids) || ' droplet(s).' as reason
       -- Additional Dimensions
-      region_name
-      ${local.tag_dimensions_sql}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "b.")}
     from
-      digitalocean_load_balancer;
+      digitalocean_load_balancer as b,
+      digitalocean_region as r
+    where
+      b.region_slug = r.slug;
   EOT
 
   tags = merge(local.network_common_tags, {
