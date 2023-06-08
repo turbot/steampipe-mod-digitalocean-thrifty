@@ -2,8 +2,8 @@
 
 _What's new?_
 
-- Added `tags` as dimensions to group and filter findings. (see [var.tag_dimensions](https://hub.steampipe.io/mods/turbot/digitalocean_thrifty/variables)) ([#29](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/29))
 - Added `connection_name` and `region` in the common dimensions to group and filter findings. (see [var.common_dimensions](https://hub.steampipe.io/mods/turbot/digitalocean_thrifty/variables)) ([#29](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/29))
+- Added `tags` as dimensions to group and filter findings. (see [var.tag_dimensions](https://hub.steampipe.io/mods/turbot/digitalocean_thrifty/variables)) ([#29](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/29))
 
 _Bug fixes_
 
