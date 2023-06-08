@@ -39,7 +39,7 @@ control "droplet_long_running" {
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}
     from
-      digitalocean_droplet as d,
+      digitalocean_droplet as d
       left join digitalocean_region as r on r.slug = d.region_slug;
   EOQ
 
