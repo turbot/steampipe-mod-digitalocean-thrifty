@@ -1,3 +1,14 @@
+## v0.5 [2023-06-08]
+
+_What's new?_
+
+- Added `tags` as dimensions to group and filter findings. (see [var.tag_dimensions](https://hub.steampipe.io/mods/turbot/digitalocean_thrifty/variables)) ([#29](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/29))
+- Added `connection_name` and `region` in the common dimensions to group and filter findings. (see [var.common_dimensions](https://hub.steampipe.io/mods/turbot/digitalocean_thrifty/variables)) ([#29](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/29))
+
+_Bug fixes_
+
+- Fixed dashboard localhost URLs in README and index doc. ([#31](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/31))
+
 ## v0.4 [2022-05-09]
 
 _Enhancements_
