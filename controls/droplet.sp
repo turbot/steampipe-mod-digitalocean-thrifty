@@ -40,9 +40,7 @@ control "droplet_long_running" {
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}
     from
       digitalocean_droplet as d,
-      digitalocean_region as r
-    where 
-      d.region_slug = r.slug;
+      left join digitalocean_region as r on r.slug = d.region_slug;
   EOQ
 
   tags = merge(local.droplet_common_tags, {
