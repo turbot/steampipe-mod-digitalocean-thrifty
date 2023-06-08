@@ -67,11 +67,8 @@ control "droplet_snapshot_age_90" {
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
     from
       digitalocean_snapshot a,
-      jsonb_array_elements_text(regions) as region,
-      digitalocean_region r
-    where
-      region = r.slug 
-      and a.resource_type = 'droplet';
+      jsonb_array_elements_text(regions) as region
+      left join digitalocean_region as r on r.slug = region;
   EOQ
 
   tags = merge(local.droplet_common_tags, {

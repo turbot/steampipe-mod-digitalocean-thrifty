@@ -37,10 +37,8 @@ control "network_floating_ip_unattached" {
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "ip.")}
     from
-      digitalocean_floating_ip as ip,
-      digitalocean_region as r
-    where
-      ip.region_slug = r.slug;
+      digitalocean_floating_ip as ip
+      left join digitalocean_region as r on r.slug = ip.region_slug;
   EOQ
 
   tags = merge(local.network_common_tags, {
@@ -64,10 +62,8 @@ control "network_load_balancer_unused" {
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "b.")}
     from
-      digitalocean_load_balancer as b,
-      digitalocean_region as r
-    where
-      b.region_slug = r.slug;
+      digitalocean_load_balancer as b
+      left join digitalocean_region as r on r.slug = b.region_slug;
   EOQ
 
   tags = merge(local.network_common_tags, {

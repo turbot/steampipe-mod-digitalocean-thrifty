@@ -34,10 +34,8 @@ control "database_long_running" {
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}
     from
-      digitalocean_database as d,
-      digitalocean_region as r
-    where
-      d.region_slug = r.slug;
+      digitalocean_database as d
+      left join digitalocean_region as r on r.slug = d.region_slug;
   EOQ
 
   tags = merge(local.database_common_tags, {

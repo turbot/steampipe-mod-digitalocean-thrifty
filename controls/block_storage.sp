@@ -35,10 +35,8 @@ control "block_storage_volume_large" {
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
     from
-      digitalocean_volume as v,
-      digitalocean_region r
-    where
-      v.region_slug = r.slug;
+      digitalocean_volume as v
+      left join digitalocean_region as r on r.slug = v.region_slug;
   EOQ
 
   tags = merge(local.block_storage_common_tags, {
@@ -68,11 +66,9 @@ control "block_storage_volume_inactive_and_unused" {
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "r.")}
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
     from
-      digitalocean_region r,
       digitalocean_volume as v
       left join digitalocean_droplet as d on v.droplet_ids @> ('['||d.id||']'):: jsonb
-    where
-      v.region_slug = r.slug;
+      left join digitalocean_region as r on r.slug = v.region_slug;
   EOQ
 
   tags = merge(local.block_storage_common_tags, {
@@ -97,11 +93,10 @@ control "block_storage_volume_snapshot_age_90" {
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
     from
       digitalocean_snapshot a,
-      jsonb_array_elements_text(regions) as region,
-      digitalocean_region r
+      jsonb_array_elements_text(regions) as region      
+      left join digitalocean_region as r on r.slug = region
     where
-      region = r.slug 
-      and a.resource_type = 'volume';
+      a.resource_type = 'volume';
   EOQ
 
   tags = merge(local.block_storage_common_tags, {
