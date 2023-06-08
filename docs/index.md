@@ -90,6 +90,31 @@ This mod uses the credentials configured in the [Steampipe DigitalOcean plugin](
 
 No extra configuration is required.
 
+### Common and Tag Dimensions
+
+The benchmark queries use common properties (like `connection_name` and `region`) and tags that are defined in the form of a default list of strings in the `mod.sp` file. These properties can be overwritten in several ways:
+
+- Copy and rename the `steampipe.spvars.example` file to `steampipe.spvars`, and then modify the variable values inside that file
+- Pass in a value on the command line:
+
+  ```shell
+  steampipe check benchmark.droplet --var 'common_dimensions=["connection_name", "region"]'
+  ```
+
+  ```shell
+  steampipe check benchmark.droplet --var 'tag_dimensions=["Environment", "Owner"]'
+  ```
+
+- Set an environment variable:
+
+  ```shell
+  SP_VAR_common_dimensions='["connection_name", "region"]' steampipe check control.droplet_long_running
+  ```
+
+  ```shell
+  SP_VAR_tag_dimensions='["Environment", "Owner"]' steampipe check control.droplet_long_running
+  ```
+
 ## Contributing
 
 If you have an idea for additional controls or just want to help maintain and extend this mod ([or others](https://github.com/topics/steampipe-mod)) we would love you to join the community and start contributing.

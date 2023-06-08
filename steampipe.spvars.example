@@ -1,0 +1,4 @@
+# Dimensions
+# Possible values for common dimensions: "connection_name" and "region"
+common_dimensions = ["region"]
+tag_dimensions    = []
