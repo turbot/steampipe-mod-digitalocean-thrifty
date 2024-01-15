@@ -1,3 +1,9 @@
+variable "kubernetes_cluster_age_max_days" {
+  type        = number
+  description = "The maximum number of days kubernetes clusters are allowed to run."
+  default     = 90
+}
+
 locals {
   kubernetes_common_tags = merge(local.digitalocean_thrifty_common_tags, {
     service = "DigitalOcean/Kubernetes"
@@ -22,19 +28,25 @@ control "kubernetes_long_running" {
   description = "Kubernetes clusters created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
+  param "kubernetes_cluster_age_max_days" {
+    description = "The maximum number of days kubernetes clusters are allowed to run."
+    default     = var.kubernetes_cluster_age_max_days
+  }
+
   sql = <<-EOQ
     select
       a.urn as resource,
+       date_part('day', now() - created_at),
       case
         when status = 'deleted' then 'skip'
-        when date_part('day', now() - created_at) > 90
+        when date_part('day', now() - created_at) > $1
         and status in ('invalid', 'error') then 'alarm'
-        when date_part('day', now() - created_at) > 90 then 'info'
+        when date_part('day', now() - created_at) > $1 then 'info'
         else 'ok'
       end as status,
       case
         when status = 'deleted' then ' SKIP'
-        when date_part('day', now() - created_at) > 90 and status in ('invalid', 'error')
+        when date_part('day', now() - created_at) > $1 and status in ('invalid', 'error')
         then a.title || ' instance status is ' || status || ', has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
         else a.title || ' has been launced for ' || date_part('day', now() - created_at) || ' day(s).'
       end as reason
@@ -45,7 +57,7 @@ control "kubernetes_long_running" {
       left join digitalocean_region as b on b.slug = a.region_slug;
   EOQ
 
-  tags = merge(local.droplet_common_tags, {
+  tags = merge(local.kubernetes_common_tags, {
     class = "unused"
   })
 }

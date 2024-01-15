@@ -3,6 +3,8 @@
 Thrifty developers eliminate their unused and under-utilized core droplet resources.
 This benchmark focuses on finding resources that have been older than thresholds days.
 
-### Default Thresholds
+## Variables
 
-- [Long running droplet threshold (90 Days)](https://hub.steampipe.io/mods/turbot/digitalocean_thrifty/controls/control.droplet_long_running)
+| Variable | Description | Default |
+| - | - | - |
+| droplet_age_max_days | The maximum number of days droplets are allowed to run. | 90 days |
