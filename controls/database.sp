@@ -1,3 +1,9 @@
+variable "database_age_max_days" {
+  type        = number
+  description = "The maximum number of days databases are allowed to run."
+  default     = 90
+}
+
 locals {
   database_common_tags = merge(local.digitalocean_thrifty_common_tags, {
     service = "DigitalOcean/Database"
@@ -22,12 +28,16 @@ control "database_long_running" {
   description = "Database clusters created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
+  param "database_age_max_days" {
+    description = "The maximum number of days databases are allowed to run."
+    default     = var.database_age_max_days
+  }
+
   sql = <<-EOQ
     select
       d.urn as resource,
       case
-        when date_part('day', now() - d.created_at) > 90 then 'alarm'
-        when date_part('day', now() - d.created_at) > 30 then 'info'
+        when date_part('day', now() - d.created_at) > $1 then 'alarm'
         else 'ok'
       end as status,
       d.title || ' of ' || d.engine || ' type in use for ' || date_part('day', now() - d.created_at) || ' day(s).' as reason

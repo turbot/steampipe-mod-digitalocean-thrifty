@@ -1,3 +1,15 @@
+variable "droplet_age_max_days" {
+  type        = number
+  description = "The maximum number of days droplets are allowed to run."
+  default     = 90
+}
+
+variable "droplet_snapshot_age_max_days" {
+  type        = number
+  description = "The maximum number of days droplets can be retained."
+  default     = 90
+}
+
 locals {
   droplet_common_tags = merge(local.digitalocean_thrifty_common_tags, {
     service = "DigitalOcean/Droplet"
@@ -23,12 +35,17 @@ control "droplet_long_running" {
   description = "Droplets created over 90 days ago should be reviewed and deleted if not required."
   severity    = "low"
 
+  param "droplet_age_max_days" {
+    description = "The maximum number of days droplets are allowed to run."
+    default     = var.droplet_age_max_days
+  }
+
   sql = <<-EOQ
     select
       d.urn as resource,
       case
-        when date_part('day', now() - d.created_at) > 90 and status = 'off' then 'alarm'
-        when date_part('day', now() - d.created_at) > 90 then 'info'
+        when date_part('day', now() - d.created_at) > $1 and status = 'off' then 'alarm'
+        when date_part('day', now() - d.created_at) > $1 then 'info'
         else 'ok'
       end as status,
       case
@@ -53,11 +70,16 @@ control "droplet_snapshot_age_90" {
   description = "Old droplet snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
+  param "droplet_snapshot_age_max_days" {
+    description = "The maximum number of days droplets are allowed to run."
+    default     = var.droplet_snapshot_age_max_days
+  }
+
   sql = <<-EOQ
     select
       a.id as resource,
       case
-        when a.created_at > current_timestamp - interval '90 days' then 'ok'
+        when a.created_at > (current_timestamp - ($1::int || ' days')::interval) then 'ok'
         else 'alarm'
       end as status,
       a.title || ' has been created for ' || date_part('day', now() - created_at) || ' day(s).' as reason
