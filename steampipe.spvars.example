@@ -2,3 +2,17 @@
 # Possible values for common dimensions: "connection_name" and "region"
 common_dimensions = ["region"]
 tag_dimensions    = []
+
+# Block Storage
+block_storage_volume_snapshot_age_max_days = 90
+block_storage_volume_max_size_gb           = 500
+
+# Database
+database_age_max_days = 90
+
+# Droplet
+droplet_age_max_days          = 90
+droplet_snapshot_age_max_days = 90
+
+# Kubernetes
+kubernetes_cluster_age_max_days = 90

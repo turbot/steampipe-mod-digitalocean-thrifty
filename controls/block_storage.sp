@@ -1,3 +1,15 @@
+variable "block_storage_volume_snapshot_age_max_days" {
+  type        = number
+  description = "The maximum number of days snapshots can be retained."
+  default     = 90
+}
+
+variable "block_storage_volume_max_size_gb" {
+  type        = number
+  description = "The maximum size (GB) allowed for volumes."
+  default     = 100
+}
+
 locals {
   block_storage_common_tags = merge(local.digitalocean_thrifty_common_tags, {
     service = "DigitalOcean/BlockStorage"
@@ -24,11 +36,16 @@ control "block_storage_volume_large" {
   description = "Block storage volumes with over 100 GB should be resized if too large"
   severity    = "low"
 
+  param "block_storage_volume_max_size_gb" {
+    description = "The maximum size (GB) allowed for volumes."
+    default     = var.block_storage_volume_max_size_gb
+  }
+
   sql = <<-EOQ
     select
       v.urn as resource,
       case
-        when v.size_gigabytes <= 100 then 'ok'
+        when v.size_gigabytes <= $1 then 'ok'
         else 'alarm'
       end as status,
       v.id || ' is ' || v.size_gigabytes || 'GB.' as reason
@@ -81,11 +98,16 @@ control "block_storage_volume_snapshot_age_90" {
   description = "Old snapshots are likely unneeded and costly to maintain."
   severity    = "low"
 
+  param "block_storage_volume_snapshot_age_max_days" {
+    description = "The maximum number of days snapshots can be retained."
+    default     = var.block_storage_volume_snapshot_age_max_days
+  }
+
   sql = <<-EOQ
     select
       a.id as resource,
       case
-        when a.created_at > current_timestamp - interval '90 days' then 'ok'
+        when a.created_at > (current_timestamp - ($1::int || ' days')::interval) then 'ok'
         else 'alarm'
       end as status,
       a.title || ' has been created for ' || date_part('day', now() - a.created_at) || ' day(s).' as reason
@@ -93,7 +115,7 @@ control "block_storage_volume_snapshot_age_90" {
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
     from
       digitalocean_snapshot a,
-      jsonb_array_elements_text(regions) as region      
+      jsonb_array_elements_text(regions) as region
       left join digitalocean_region as r on r.slug = region
     where
       a.resource_type = 'volume';
