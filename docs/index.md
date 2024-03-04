@@ -20,11 +20,11 @@ Install Powerpipe (https://powerpipe.io/downloads), or use Brew:
 brew install turbot/tap/powerpipe
 ```
 
-This mod also requires [Steampipe](https://steampipe.io) with the [AWS plugin](https://hub.steampipe.io/plugins/turbot/aws) as the data source. Install Steampipe (https://steampipe.io/downloads), or use Brew:
+This mod also requires [Steampipe](https://steampipe.io) with the [DigitalOcean plugin](https://hub.steampipe.io/plugins/turbot/digitalocean) as the data source. Install Steampipe (https://steampipe.io/downloads), or use Brew:
 
 ```sh
 brew install turbot/tap/steampipe
-steampipe plugin install aws
+steampipe plugin install digitalocean
 ```
 
 This mod uses the credentials configured in the [Steampipe DigitalOcean plugin](https://hub.steampipe.io/plugins/turbot/digitalocean).
