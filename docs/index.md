@@ -2,13 +2,13 @@
 
 Be Thrifty on DigitalOcean! This mod checks for unused resources and opportunities to optimize your spend on DigitalOcean.
 
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/main/docs/digitalocean_thrifty_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/main/docs/digitalocean_thrifty_block_storage_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/add-new-checks/docs/digitalocean_thrifty_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/add-new-checks/docs/digitalocean_thrifty_block_storage_dashboard.png" width="50%" type="thumbnail"/>
 
 ## Documentation
 
-- **[Benchmarks and controls →](https://hub.powerpipe.io/mods/turbot/digitalocean_thrifty/controls)**
-- **[Named queries →](https://hub.powerpipe.io/mods/turbot/digitalocean_thrifty/queries)**
+- **[Benchmarks and controls →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/digitalocean_thrifty/controls)**
+- **[Named queries →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/digitalocean_thrifty/queries)**
 
 ## Getting started
 
@@ -35,7 +35,7 @@ Finally, install the mod:
 mkdir dashboards
 cd dashboards
 powerpipe mod init
-powerpipe mod install github.com/turbot/powerpipe-mod-digitalocean-thrifty
+powerpipe mod install github.com/turbot/steampipe-mod-digitalocean-thrifty
 ```
 
 ### Browsing Dashboards
@@ -52,7 +52,7 @@ Start the dashboard server:
 powerpipe server
 ```
 
-Browse and view your dashboards at **https://localhost:9033**.
+Browse and view your dashboards at **http://localhost:9033**.
 
 ### Running Checks in Your Terminal
 
@@ -95,8 +95,8 @@ powerpipe benchmark run digitalocean_thrifty.benchmark.droplet --var 'tag_dimens
 Or through environment variables:
 
 ```sh
-export SP_VAR_common_dimensions='["connection_name", "region"]'
-export SP_VAR_tag_dimensions='["Environment", "Owner"]'
+export PP_VAR_common_dimensions='["connection_name", "region"]'
+export PP_VAR_tag_dimensions='["Environment", "Owner"]'
 powerpipe benchmark run digitalocean_thrifty.benchmark.droplet
 ```
 
