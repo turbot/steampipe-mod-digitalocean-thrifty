@@ -8,7 +8,7 @@ _What's new?_
   - `Block Storage`
   - `Kubernetes`
 
-To get started, please see [Digitalocean Thrifty Configuration] (https://hub.steampipe.io/mods/turbot/digitalocean_thrifty#configuration). For a list of variables and their default values, please see [steampipe.spvars](https://github.com/turbot/steampipe-mod-aws-thrifty/blob/main/steampipe.spvars). ([#36](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/36))
+To get started, please see [Digitalocean Thrifty Configuration] (https://hub.steampipe.io/mods/turbot/digitalocean_thrifty#configuration). For a list of variables and their default values, please see [steampipe.spvars](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/blob/main/steampipe.spvars). ([#36](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/36))
 
 ## v0.5 [2023-06-08]
 

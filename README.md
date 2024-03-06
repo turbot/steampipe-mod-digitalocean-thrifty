@@ -7,23 +7,14 @@ Are you a Thrifty DigitalOcean dev? This Powerpipe mod checks your DigitalOcean 
 
 Run checks in a dashboard:
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/add-new-checks/docs/digitalocean_thrifty_dashboard.png)
-
-Includes checks for:
-
-- Underused **Kubernetes** Clusters
-- Unused, underused and oversized **Droplets** and **Snapshots**
-- Unused, underused and oversized **Database** Clusters
-- Unused, underused and oversized **Block Storage Volumes**
-- **Network Checks**
-- [#TODO List](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-digitalocean-thrifty/main/docs/digitalocean_thrifty_dashboard.png)
 
 ## Documentation
 
-- **[Benchmarks and controls →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/digitalocean_thrifty/controls)**
-- **[Named queries →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/digitalocean_thrifty/queries)**
+- **[Benchmarks and controls →](https://hub.powerpipe.iop/mods/turbot/digitalocean_thrifty/controls)**
+- **[Named queries →](https://hub.powerpipe.iop/mods/turbot/digitalocean_thrifty/queries)**
 
-## Getting started
+## Getting Started
 
 ### Installation
 
@@ -39,8 +30,6 @@ This mod also requires [Steampipe](https://steampipe.io) with the [DigitalOcean 
 brew install turbot/tap/steampipe
 steampipe plugin install digitalocean
 ```
-
-This mod uses the credentials configured in the [Steampipe DigitalOcean plugin](https://hub.steampipe.io/plugins/turbot/digitalocean).
 
 Finally, install the mod:
 
@@ -87,6 +76,32 @@ powerpipe benchmark run digitalocean_thrifty.benchmark.droplet
 Different output formats are also available, for more information please see
 [Output Formats](https://powerpipe.io/docs/reference/cli/benchmark#output-formats).
 
+### Configure Variables
+
+Several benchmarks have [input variables](https://powerpipe.io/docs/build/mod-variables#input-variables) that can be configured to better match your environment and requirements. Each variable has a default defined in its source file, e.g., `controls/droplet.sp`, but these can be overwritten in several ways:
+
+It's easiest to setup your vars file, starting with the sample:
+
+```sh
+cp steampipe.spvars.example steampipe.spvars
+vi steampipe.spvars
+```
+
+Alternatively you can pass variables on the command line:
+
+```sh
+powerpipe benchmark run droplet --var=droplet_snapshot_age_max_days=90
+```
+
+Or through environment variables:
+
+```sh
+export PP_VAR_droplet_snapshot_age_max_days=90 
+powerpipe control run droplet_snapshot_age_90
+```
+
+These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://powerpipe.io/docs/build/mod-variables#passing-input-variables).
+
 ### Common and Tag Dimensions
 
 The benchmark queries use common properties (like `connection_name` and `region`) and tags that are defined in the form of a default list of strings in the `mod.sp` file. These properties can be overwritten in several ways:
@@ -94,8 +109,8 @@ The benchmark queries use common properties (like `connection_name` and `region`
 It's easiest to setup your vars file, starting with the sample:
 
 ```sh
-cp powerpipe.ppvar.example powerpipe.ppvars
-vi powerpipe.ppvars
+cp steampipe.spvars.example steampipe.spvars
+vi steampipe.spvars
 ```
 
 Alternatively you can pass variables on the command line:
