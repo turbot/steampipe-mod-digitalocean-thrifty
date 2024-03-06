@@ -1,3 +1,16 @@
+## v0.7 [2024-03-06]
+
+_Powerpipe_
+
+[Powerpipe](https://powerpipe.io) is now the preferred way to run this mod!  [Migrating from Steampipe →](https://powerpipe.io/blog/migrating-from-steampipe)
+
+All v0.x versions of this mod will work in both Steampipe and Powerpipe, but v1.0.0 onwards will be in Powerpipe format only.
+
+_Enhancements_
+
+- Focus documentation on Powerpipe commands.
+- Show how to combine Powerpipe mods with Steampipe plugins.
+
 ## v0.6 [2024-01-16]
 
 _What's new?_
@@ -8,7 +21,7 @@ _What's new?_
   - `Block Storage`
   - `Kubernetes`
 
-To get started, please see [Digitalocean Thrifty Configuration] (https://hub.steampipe.io/mods/turbot/digitalocean_thrifty#configuration). For a list of variables and their default values, please see [steampipe.spvars](https://github.com/turbot/steampipe-mod-aws-thrifty/blob/main/steampipe.spvars). ([#36](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/36))
+To get started, please see [Digitalocean Thrifty Configuration] (https://hub.steampipe.io/mods/turbot/digitalocean_thrifty#configuration). For a list of variables and their default values, please see [steampipe.spvars](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/blob/main/steampipe.spvars). ([#36](https://github.com/turbot/steampipe-mod-digitalocean-thrifty/pull/36))
 
 ## v0.5 [2023-06-08]
 
